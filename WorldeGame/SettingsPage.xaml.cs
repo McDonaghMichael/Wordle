@@ -3,7 +3,6 @@ namespace WorldeGame
     public partial class SettingsPage : ContentPage
     {
         Switch darkModeSwitch;
-        Slider fontSizeSlider;
         Switch hintsToggle;
 
         public SettingsPage()
@@ -25,15 +24,6 @@ namespace WorldeGame
             layout.Children.Add(CreateLabel("Hints"));
             layout.Children.Add(hintsToggle);
 
-            fontSizeSlider = new Slider
-            {
-                Minimum = 10,
-                Maximum = 52,
-                Value = 20,
-            };
-            layout.Children.Add(CreateLabel("Font Size"));
-            layout.Children.Add(fontSizeSlider);
-            layout.Children.Add(CreateLabel(fontSizeSlider.Value.ToString()));
 
             layout.Children.Add(CreateStyledButton("Save", OnSaveButtonClicked, 1));
             layout.Children.Add(CreateStyledButton("Reset to Defaults", OnResetButtonClicked, 1));
@@ -80,7 +70,6 @@ namespace WorldeGame
         private void ApplyDefaultSettings()
         {
             darkModeSwitch.IsToggled = DefaultConstants.IsDarkMode();
-            fontSizeSlider.Value = DefaultConstants.GetFontSize();
             hintsToggle.IsToggled = DefaultConstants.IsHintsEnabled();
         }
 
@@ -107,18 +96,15 @@ namespace WorldeGame
         private void SaveSettings()
         {
             var IsDarkMode = darkModeSwitch.IsToggled;
-            var fontSize = fontSizeSlider.Value;
             var showHints = hintsToggle.IsToggled;
 
             Preferences.Default.Set("dark_mode", IsDarkMode);
-            Preferences.Default.Set("font-size", fontSize);
             Preferences.Default.Set("show_hints", showHints);
         }
 
         private void ResetToDefaults()
         {
             darkModeSwitch.IsToggled = false;
-            fontSizeSlider.Value = 20;
             hintsToggle.IsToggled = false;
             Preferences.Default.Set("dark_mode", false);
             Preferences.Default.Set("font-size", 20);

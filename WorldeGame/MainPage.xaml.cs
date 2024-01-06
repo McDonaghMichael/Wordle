@@ -51,9 +51,9 @@ namespace WorldeGame
             };
 
            
-            Button historyButton = new Button
+            Button creditsButton = new Button
             {
-                Text = "History",
+                Text = "Credits",
                 BackgroundColor = Color.FromArgb(DefaultConstants.GetButtonBackgroundColor(1)),
                 TextColor = Colors.White,
                 FontSize = 20,
@@ -67,11 +67,12 @@ namespace WorldeGame
             playButton.Clicked += PlayButtonClicked;
             settingsButton.Clicked += SettingsButtonClicked;
             howToPlayButton.Clicked += HowToPlayButtonClicked;
+            creditsButton.Clicked += CreditsButtonClicked;
 
             topLevel.Children.Add(playButton);
 
             middleLevel.Children.Add(howToPlayButton);
-            middleLevel.Children.Add(historyButton);
+            middleLevel.Children.Add(creditsButton);
             middleLevel.Children.Add(settingsButton);
         }
 
@@ -86,8 +87,13 @@ namespace WorldeGame
         }
 
         private async void HowToPlayButtonClicked(object sender, EventArgs e)
-        {     
+        {
             await Navigation.PushAsync(new HowToPlayPage());
+        }
+
+        private async void CreditsButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CreditsPage());
         }
 
 
