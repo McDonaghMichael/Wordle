@@ -2,44 +2,47 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WorldeGame.GamePage"
-             Title="Worlde Game">
+             >
 
     <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="10">
 
-        <Grid x:Name="lettersGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" RowSpacing="10" ColumnSpacing="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Label x:Name="headingLabel" Text=" "
+           FontSize="20"
+           FontAttributes="Bold"
+           TextColor="White"
+           VerticalOptions="CenterAndExpand"
+           HorizontalOptions="Start" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <ScrollView>
+
+            <Grid x:Name="lettersGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" RowSpacing="10" ColumnSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
 
-        </Grid>
-        <Button Text="A" Clicked="OnLetterButtonClicked" Grid.Row="0" Grid.Column="0" />
-        <Button Text="B" Clicked="OnLetterButtonClicked" Grid.Row="0" Grid.Column="1" />
-        <Button Text="C" Clicked="OnLetterButtonClicked" Grid.Row="0" Grid.Column="2" />
-        <Button Text="D" Clicked="OnLetterButtonClicked" Grid.Row="0" Grid.Column="3" />
-        <Button Text="E" Clicked="OnLetterButtonClicked" Grid.Row="0" Grid.Column="4" />
+            </Grid>
 
 
-        <Button Text="F" Clicked="OnLetterButtonClicked" Grid.Row="1" Grid.Column="0" />
-        <Button Text="G" Clicked="OnLetterButtonClicked" Grid.Row="1" Grid.Column="1" />
-        <Button Text="H" Clicked="OnLetterButtonClicked" Grid.Row="1" Grid.Column="2" />
-        <Button Text="I" Clicked="OnLetterButtonClicked" Grid.Row="1" Grid.Column="3" />
-        <Button Text="J" Clicked="OnLetterButtonClicked" Grid.Row="1" Grid.Column="4" />
-
-        <Button Text="⌫" Clicked="OnBackspaceButtonClicked" HorizontalOptions="Center" />
-        <Button Text="⌫" Clicked="OnSubmitButtonClicked" HorizontalOptions="Center" />
-
+        </ScrollView>
+        <ScrollView>
+       
+            <Grid x:Name="backspaceSubmitGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" RowSpacing="10" ColumnSpacing="10">
+                
+                          </Grid>
+        </ScrollView>
     </StackLayout>
 </ContentPage>

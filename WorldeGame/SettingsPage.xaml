@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorldeGame.SettingsPage">
+    <VerticalStackLayout Spacing="10" VerticalOptions="CenterAndExpand">
+        <Label Text="Settings"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="StartAndExpand" />
+
+        <StackLayout WidthRequest="500">
+            <VerticalStackLayout x:Name="layout">
+            </VerticalStackLayout>
+        </StackLayout>
+
+
+    </VerticalStackLayout>
+</ContentPage>

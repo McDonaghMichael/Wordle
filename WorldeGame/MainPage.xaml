@@ -3,19 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WorldeGame.MainPage">
 
-    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Spacing="10" Padding="20" BackgroundColor="LightBlue">
+    <VerticalStackLayout VerticalOptions="CenterAndExpand">
 
-        <Image Source="your_logo.png" HorizontalOptions="CenterAndExpand" />
+        <VerticalStackLayout x:Name="topLevel" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+        </VerticalStackLayout>
 
-        <ImageButton Source="playbutton.png" Clicked="OnPlayButtonClicked" BackgroundColor="Transparent" WidthRequest="200" HeightRequest="50" />
+        <StackLayout HorizontalOptions="Center">
+            <HorizontalStackLayout x:Name="middleLevel" VerticalOptions="CenterAndExpand">
 
-
-        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="20">
-            <Button Text="Button 1" WidthRequest="100" HeightRequest="50" BackgroundColor="Beige" FontSize="Large" />
-            <Button Text="Button 2" WidthRequest="100" HeightRequest="50" BackgroundColor="Beige" FontSize="Large" />
-            <Button Text="Button 3" WidthRequest="100" HeightRequest="50" BackgroundColor="Beige" FontSize="Large" />
+            </HorizontalStackLayout>
         </StackLayout>
 
-    </StackLayout>
-
+    </VerticalStackLayout>
 </ContentPage>
