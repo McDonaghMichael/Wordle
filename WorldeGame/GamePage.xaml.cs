@@ -20,12 +20,13 @@ namespace WorldeGame
         const int GAME_WON = 0;
         const int GAME_LOST = 1;
 
-
         // "currentRowIndex" and "currentColumnIndex" are the index of the currently used column and row during the game, so when the game starts
         // its on the 0,0 but when a letter entered the column increases, and when the word is submitted, the row increases and the column resets back
         // to zero!
         private int currentRowIndex = 0;
         private int currentColumnIndex = 0;
+
+        private int charButtonLoadCount = 1;
 
         // The following variable increases/decreases depending on the amount of characters entered, this will allow me to set a limit of 5 characters entered
         private int indexedCharacters = 0;
@@ -62,7 +63,6 @@ namespace WorldeGame
             
         }
 
-
         // Gameplay UI will be loaded in with this method
         private void CreateUI()
         {
@@ -98,6 +98,7 @@ namespace WorldeGame
             indexedCharacterPositions['X'] = new int[] { 2, 7 };
 
             indexedCharacterPositions['Y'] = new int[] { 3, 0 };
+            indexedCharacterPositions['Z'] = new int[] { 3, 1 };
 
             LoadCharButtons();
         }
@@ -276,7 +277,7 @@ namespace WorldeGame
                 UpdateMessage("A letter has been unveiled, keep trying!");
             }
 
-            if (correct >= 5)
+            if (isValidAnswer())
             {
                 ReapplyLetterBox();
                 GameCompleted(GAME_WON);
@@ -304,6 +305,27 @@ namespace WorldeGame
             headingLabel.Text = message;
         }
 
+        // Validates if an answer is correct or not
+        private Boolean isValidAnswer()
+        {
+            int correct = 0;
+            for(int i = 0; i < charArray.Length; i++)
+            {
+                char c = charArray[i];
+                char a = lettersArray[i];
+                if(c == a) {
+                    correct++;
+                }
+            }
+
+            if(correct == 5)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         // Reveals a random letter of the word and highlights it
         private void RevealGridCharacter()
         {
@@ -318,17 +340,21 @@ namespace WorldeGame
             // Get the randomly selected letter
             char randomLetter = wordCharArray[randomIndex];
 
+            if(ArrayContainsLetter(lettersArray, randomLetter))
+            {
+                UpdateMessage("You have guessed all the letters, no more can be revealed :c");
+                return;
+            }
+
             int[] position = indexedCharacterPositions[randomLetter];
             int rowA = position[0];
             int colA = position[1];
-            foreach (var child in backspaceSubmitGrid.Children)
+            foreach (var child in keyboardGrid.Children)
             {
                 if (child is Button button &&
                     Microsoft.Maui.Controls.Grid.GetRow(button) == rowA &&
                     Microsoft.Maui.Controls.Grid.GetColumn(button) == colA)
                 {
-                    // Deactivate the button and change its background color
-                    button.IsEnabled = false;
 
                     button.BackgroundColor = Color.FromArgb(DefaultConstants.GetColour("yellow"));
 
@@ -336,12 +362,12 @@ namespace WorldeGame
                 }
             }
         }
-        
+
         // Method simply deactivates and highlights the character button
         private void DeactivateAndHighlightButton(int row, int column)
         {
             // Iterate through the children of lettersGrid
-            foreach (var child in backspaceSubmitGrid.Children)
+            foreach (var child in keyboardGrid.Children)
             {
                 if (child is Button button &&
                     Microsoft.Maui.Controls.Grid.GetRow(button) == row &&
@@ -350,7 +376,7 @@ namespace WorldeGame
                     // Deactivate the button and change its background color
                     button.IsEnabled = false;
                     button.BackgroundColor = Color.FromArgb(DefaultConstants.GetButtonBackgroundColor(3));
-                    break; 
+                    break;
                 }
             }
         }
@@ -360,9 +386,24 @@ namespace WorldeGame
         {
             char[] letters = text.ToCharArray();
 
-            for(int i = 0; i < letters.Length; i++)
+            for (int i = 0; i < letters.Length; i++)
             {
-                if(expected == letters[i])
+                if (expected == letters[i])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Same as the above method but check if an array has the letter
+        private static bool ArrayContainsLetter(char[] letters, char expected)
+        {
+
+            for (int i = 0; i < letters.Length; i++)
+            {
+                if (expected == letters[i])
                 {
                     return true;
                 }
@@ -416,7 +457,7 @@ namespace WorldeGame
         // This method manages all of the resets of variables and game functions
         private void ResetGame()
         {
-            backspaceSubmitGrid.Children.Clear();
+            keyboardGrid.Children.Clear();
             currentRowIndex = 0;
             currentColumnIndex = 0;
             indexedCharacters = 0;
@@ -438,24 +479,24 @@ namespace WorldeGame
         // When the UI is being created, this method is called so the character buttons can be loaded in
         private void LoadCharButtons()
         {
-            backspaceSubmitGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            backspaceSubmitGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            backspaceSubmitGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            backspaceSubmitGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            backspaceSubmitGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            keyboardGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            keyboardGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            keyboardGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            keyboardGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            keyboardGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            backspaceSubmitGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            keyboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
 
 
             lettersArray = new char[] { '-', '-', '-', '-', '-' };
-            char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXY".ToCharArray();
+            char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
             for (int i = 0; i < alphabet.Length; i++)
             {
@@ -477,9 +518,22 @@ namespace WorldeGame
 
                 letterButton.Clicked += OnCharBtnClicked;
 
-                backspaceSubmitGrid.Children.Add(letterButton);
-                Microsoft.Maui.Controls.Grid.SetRow(letterButton, row);
-                Microsoft.Maui.Controls.Grid.SetColumn(letterButton, col);
+                if (charButtonLoadCount != 1)
+                {
+                    keyboardGrid.Children.Add(letterButton);
+                    Microsoft.Maui.Controls.Grid.SetRow(letterButton, row);
+                    Microsoft.Maui.Controls.Grid.SetColumn(letterButton, col + 1);
+                }
+                else
+                {
+                    keyboardGrid.Children.Add(letterButton);
+                    Microsoft.Maui.Controls.Grid.SetRow(letterButton, row);
+                    Microsoft.Maui.Controls.Grid.SetColumn(letterButton, col);
+                }
+
+                letterButton.IsEnabled = true;
+            }
+                
 
                 var backspaceButton = new Button
                 {
@@ -518,7 +572,7 @@ namespace WorldeGame
                     HorizontalOptions = LayoutOptions.Center,
                     VerticalOptions = LayoutOptions.Center,
                     TextColor = Colors.White,
-                    BackgroundColor = Color.FromArgb(DefaultConstants.GetButtonBackgroundColor(3)),
+                    BackgroundColor = Color.FromArgb(DefaultConstants.GetColour("red")),
                     CornerRadius = 10,
                     HeightRequest = 60,
                     WidthRequest = 150
@@ -530,34 +584,34 @@ namespace WorldeGame
                 };
 
 
-                backspaceSubmitGrid.Children.Add(backspaceButton);
-                backspaceSubmitGrid.Children.Add(submitButton);
-                backspaceSubmitGrid.Children.Add(exitButton);
+                keyboardGrid.Children.Add(backspaceButton);
+                keyboardGrid.Children.Add(submitButton);
+                keyboardGrid.Children.Add(exitButton);
 
-                letterButton.IsEnabled = true;
+                
                 backspaceButton.IsEnabled = true;
                 submitButton.IsEnabled = true;
                 exitButton.IsEnabled = true;
 
 
-                Microsoft.Maui.Controls.Grid.SetRow(backspaceButton, 4);
-                Microsoft.Maui.Controls.Grid.SetColumn(backspaceButton, 0);
+                Microsoft.Maui.Controls.Grid.SetRow(backspaceButton, 3);
+                Microsoft.Maui.Controls.Grid.SetColumn(backspaceButton, 2);
                 Microsoft.Maui.Controls.Grid.SetColumnSpan(backspaceButton, 2);
 
-                Microsoft.Maui.Controls.Grid.SetRow(submitButton, 4);
-                Microsoft.Maui.Controls.Grid.SetColumn(submitButton, 2);
-                Microsoft.Maui.Controls.Grid.SetColumnSpan(submitButton, 2);
+                Microsoft.Maui.Controls.Grid.SetRow(submitButton, 3);
+                Microsoft.Maui.Controls.Grid.SetColumn(submitButton, 3);
+                Microsoft.Maui.Controls.Grid.SetColumnSpan(submitButton, 4);
 
-                Microsoft.Maui.Controls.Grid.SetRow(exitButton, 4);
-                Microsoft.Maui.Controls.Grid.SetColumn(exitButton, 4);
-                Microsoft.Maui.Controls.Grid.SetColumnSpan(exitButton, 2);
-            }
+                Microsoft.Maui.Controls.Grid.SetRow(exitButton, 3);
+                Microsoft.Maui.Controls.Grid.SetColumn(exitButton, 6);
+                Microsoft.Maui.Controls.Grid.SetColumnSpan(exitButton, 8);
+            
         }
 
         // Once the game finishes, this method will be called into action
         private async void GameCompleted(int gameStatus)
         {
-            backspaceSubmitGrid.Children.Clear();
+            keyboardGrid.Children.Clear();
             gameEndStatus = true;
 
             var menuButton = new Button
@@ -580,7 +634,7 @@ namespace WorldeGame
                 Navigation.PushAsync(new MainPage());
             };
 
-            backspaceSubmitGrid.Children.Add(menuButton);
+            keyboardGrid.Children.Add(menuButton);
             Microsoft.Maui.Controls.Grid.SetRow(menuButton, 0);
             Microsoft.Maui.Controls.Grid.SetColumn(menuButton, 0);
 
@@ -605,7 +659,7 @@ namespace WorldeGame
             };
 
 
-            backspaceSubmitGrid.Children.Add(replayButton);
+            keyboardGrid.Children.Add(replayButton);
             Microsoft.Maui.Controls.Grid.SetRow(replayButton, 0);
             Microsoft.Maui.Controls.Grid.SetColumn(replayButton, 1);
            

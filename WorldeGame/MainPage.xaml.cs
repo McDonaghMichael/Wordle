@@ -9,6 +9,8 @@ namespace WorldeGame
         {
             InitializeComponent();
 
+           ListOfWords.LoadWordsAsync();
+
             this.BackgroundColor = Color.FromArgb(DefaultConstants.GetBackgroundColor());
 
             Button playButton = new Button

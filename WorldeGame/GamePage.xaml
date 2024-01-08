@@ -40,9 +40,9 @@
         </ScrollView>
         <ScrollView>
        
-            <Grid x:Name="backspaceSubmitGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" RowSpacing="10" ColumnSpacing="10">
+            <Grid x:Name="keyboardGrid" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" RowSpacing="10" ColumnSpacing="10">
                 
-                          </Grid>
+            </Grid>
         </ScrollView>
     </StackLayout>
 </ContentPage>

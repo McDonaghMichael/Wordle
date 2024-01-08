@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace WorldeGame
 {
@@ -11,10 +8,10 @@ namespace WorldeGame
 
         static ListOfWords()
         {
-            LoadWordsAsync(); // Wait for the asynchronous operation to complete
+            LoadWordsAsync();
         }
 
-        private static async Task LoadWordsAsync()
+        public static async Task LoadWordsAsync()
         {
             List<string> loadedWords = new List<string>();
 
