@@ -15,10 +15,10 @@ Welcome to Wordle, an exciting word puzzle game where players must guess a secre
 To get started with Wordle, follow these steps:
 
 1. Clone this repository to your local machine:
-```git clone https://github.com/your-username/worlde-game.git```
+```[git clone https://github.com/McDonaghMichael/Wordle.git```
 
 3. Navigate to the project directory:
-```cd worlde-game```
+```cd Wordle```
 
 Open the solution file in Visual Studio or your preferred IDE.
 Build and run the project to start playing the game.
