@@ -1,4 +1,4 @@
-# Wordle Game
+# Wordle Game [IN DEVELOPMENT]
 
 Welcome to Wordle, an exciting word puzzle game where players must guess a secret word within a limited number of attempts. Test your vocabulary and logic skills in this addictive and challenging game!
 
